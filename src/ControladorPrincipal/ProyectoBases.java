@@ -5,10 +5,7 @@
 package ControladorPrincipal;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Vista.IngresarUsuario;
-import Vista.PantallaPrincipal;
 
 /**
  *
@@ -18,21 +15,8 @@ public class ProyectoBases extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        PantallaPrincipal primera = new PantallaPrincipal(primaryStage);
-        Scene scene = new Scene(primera.getPrincipal());
-        IngresarUsuario a = new IngresarUsuario();
-        //Scene scene = new Scene(a.preparaFormulario());
-        /*Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight()); */
-        primaryStage.setFullScreen(true);
-        primaryStage.setTitle("Tienda");
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add("File:src/Vista/Principal.css");
+        ControlaVistas principal = new ControlaVistas(primaryStage);
+        ControlaVistas.muestraVistaPrincipal();
         primaryStage.show();
     }
 
