@@ -4,6 +4,9 @@
  */
 package Vista;
 
+import ControladorPrincipal.ControlaVistas;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -55,10 +58,23 @@ public class IngresarUsuario {
         PasswordField pwBox = new PasswordField();
         formulario.add(pwBox, 1, 2);
         
-        Button btn = new Button("Sign in");
+        Button ingresar = new Button("Ingresar");
+        ingresar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ControlaVistas.muestraFormulario();
+            }
+        });
+        Button cancelar = new Button("Cancelar");
+        cancelar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ControlaVistas.muestraVistaPrincipal();
+            }
+        });
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
+        hbBtn.getChildren().addAll(cancelar, ingresar);
         formulario.add(hbBtn, 1, 4);
         
         capaBase.setCenter(formulario);
