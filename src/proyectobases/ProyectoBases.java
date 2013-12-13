@@ -18,8 +18,10 @@ public class ProyectoBases extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        PantallaPrincipal primera = new PantallaPrincipal();
+        PantallaPrincipal primera = new PantallaPrincipal(primaryStage);
         Scene scene = new Scene(primera.getPrincipal());
+        IngresarUsuario a = new IngresarUsuario();
+        //Scene scene = new Scene(a.preparaFormulario());
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 

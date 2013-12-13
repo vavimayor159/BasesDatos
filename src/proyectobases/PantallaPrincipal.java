@@ -4,10 +4,16 @@
  */
 package proyectobases;
 
+
+import eu.schudt.javafx.controls.calendar.DatePicker;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
@@ -22,18 +28,43 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Ivan
  */
 public class PantallaPrincipal {
+    private IngresarUsuario formulario;
     private BorderPane principal;
     private Button btn;
+    private Button eligeFecha;
     private AnchorPane botonesPedido;
     private TilePane capaTitulo;
+    private Stage primaryStage;
     
-    public PantallaPrincipal(){
+    public PantallaPrincipal(Stage primaryStage){
+        GridPane gridPane;
+        gridPane = new GridPane();
+        DatePicker calendario;
+        formulario = new IngresarUsuario();
+        eligeFecha = new Button("Ver la fecha");
+        eligeFecha.getStyleClass().add("botonServicio");
+        // Initialize the DatePicker for birthday
+        calendario = new DatePicker(Locale.ENGLISH);
+        calendario.setDateFormat(new SimpleDateFormat("dd-MM-yyyy"));
+        calendario.getCalendarView().todayButtonTextProperty().set("Today");
+        calendario.getCalendarView().setShowWeeks(false);
+        calendario.getStylesheets().add("File:Resources/DatePicker.css");
+        calendario.getPromptText();
+        // Add DatePicker to grid
+        Text ingresaFecha = new Text("Ingresa la fecha a buscar:");
+        gridPane.add(ingresaFecha, 0, 5);
+        gridPane.add(calendario, 1, 5);
+        gridPane.add(eligeFecha, 3, 5);
+        
+        this.primaryStage = primaryStage;
         principal = new BorderPane();
         principal.getStyleClass().add("principal");
         btn = new Button();
@@ -56,6 +87,7 @@ public class PantallaPrincipal {
         centrado.setVgap(12);
         centrado.add(this.construyeTitulo(), 5, 0);
         principal.setTop(centrado);
+        principal.setRight(gridPane);
     }
     
     private AnchorPane agregarBotonesPedido() {
@@ -63,6 +95,17 @@ public class PantallaPrincipal {
         Button botonNuevo = new Button("Nuevo Pedido");
         botonNuevo.getStyleClass().add("botonCompras");
         botonNuevo.setPrefSize(150, 100);
+        
+        botonNuevo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Scene scene1 = new Scene(formulario.preparaFormulario());
+                scene1.getStylesheets().add(ProyectoBases.class.getResource("Principal.css").toExternalForm());
+                
+                primaryStage.setScene(scene1);
+            }
+        });
+        
         Button botonCancelar = new Button("Cancel");
         botonCancelar.getStyleClass().add("botonServicio");
 
