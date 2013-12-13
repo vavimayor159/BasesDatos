@@ -5,6 +5,7 @@
 package Vista;
 
 import ControladorPrincipal.ControlaVistas;
+import ControladorPrincipal.ControlaBaseDatos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -49,7 +50,7 @@ public class IngresarUsuario {
         Label userName = new Label("User Name:");
         formulario.add(userName, 0, 1);
 
-        TextField userTextField = new TextField();
+        final TextField userTextField = new TextField();
         formulario.add(userTextField, 1, 1);
 
         Label pw = new Label("Password:");
@@ -58,11 +59,21 @@ public class IngresarUsuario {
         PasswordField pwBox = new PasswordField();
         formulario.add(pwBox, 1, 2);
         
+        final Text actiontarget = new Text();
+        formulario.add(actiontarget, 1, 6);
+        
         Button ingresar = new Button("Ingresar");
         ingresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ControlaVistas.muestraFormulario();
+                System.out.println(userTextField.getPromptText());
+                if(ControlaBaseDatos.buscaCliente(userTextField.getPromptText())){
+                    actiontarget.setFill(Color.FIREBRICK);
+                    actiontarget.setText("Esta en la base de datos");
+                } else {
+                    actiontarget.setFill(Color.FIREBRICK);
+                    actiontarget.setText("No esta en la base de datos");
+                }
             }
         });
         Button cancelar = new Button("Cancelar");
