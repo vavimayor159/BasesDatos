@@ -47,6 +47,8 @@ root {
     -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
+    -fx-text-fill: white;
+    -fx-text-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
 }
 
 .botonCompras:hover {
@@ -65,4 +67,8 @@ root {
 .botonCompras text{
     -fx-fill: white;
     -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+}
+
+#titulo {
+    -fx-padding: 10%;
 }

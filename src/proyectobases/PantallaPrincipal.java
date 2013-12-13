@@ -7,10 +7,20 @@ package proyectobases;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -20,10 +30,13 @@ public class PantallaPrincipal {
     private BorderPane principal;
     private Button btn;
     private AnchorPane botonesPedido;
-    
+    private TilePane capaTitulo;
     
     public PantallaPrincipal(){
         principal = new BorderPane();
+        btn = new Button();
+        capaTitulo = new TilePane();
+        capaTitulo.setId("titulo");
         btn.setText("Say 'Hello World'");
         btn.getStyleClass().add("botonServicio");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -35,6 +48,12 @@ public class PantallaPrincipal {
         botonesPedido = agregarBotonesPedido();
         principal.setBottom(botonesPedido);
         principal.setCenter(btn);
+        GridPane centrado = new GridPane();
+        centrado.setAlignment(Pos.CENTER_LEFT);
+        centrado.setHgap(10);
+        centrado.setVgap(12);
+        centrado.add(this.construyeTitulo(), 5, 0);
+        principal.setTop(centrado);
     }
     
     private AnchorPane agregarBotonesPedido() {
@@ -59,6 +78,55 @@ public class PantallaPrincipal {
 
     public BorderPane getPrincipal() {
         return principal;
+    }
+    
+    private Text construyeTitulo(){
+        Text titulo = new Text("Bienvenido a \"La Baguetera\"");
+        titulo.setId("titulo");
+        titulo.setFont(Font.loadFont("file:Resources/fonts/Delicious-Heavy.otf", 100));
+        titulo.setFill(Color.WHITE);
+        
+        Blend blend = new Blend();
+        blend.setMode(BlendMode.MULTIPLY);
+
+        DropShadow ds = new DropShadow();
+        ds.setColor(Color.rgb(254, 235, 66, 0.3));
+        ds.setOffsetX(5);
+        ds.setOffsetY(5);
+        ds.setRadius(5);
+        ds.setSpread(0.2);
+
+        blend.setBottomInput(ds);
+
+        DropShadow ds1 = new DropShadow();
+        ds1.setColor(Color.web("#f13a00"));
+        ds1.setRadius(20);
+        ds1.setSpread(0.2);
+
+        Blend blend2 = new Blend();
+        blend2.setMode(BlendMode.MULTIPLY);
+
+        InnerShadow is = new InnerShadow();
+        is.setColor(Color.web("#feeb42"));
+        is.setRadius(9);
+        is.setChoke(0.8);
+        blend2.setBottomInput(is);
+
+        InnerShadow is1 = new InnerShadow();
+        is1.setColor(Color.web("#f13a00"));
+        is1.setRadius(5);
+        is1.setChoke(0.4);
+        blend2.setTopInput(is1);
+
+        Blend blend1 = new Blend();
+        blend1.setMode(BlendMode.MULTIPLY);
+        blend1.setBottomInput(ds1);
+        blend1.setTopInput(blend2);
+
+        blend.setTopInput(blend1);
+
+        titulo.setEffect(blend);
+        return titulo;
     }
     
 }
