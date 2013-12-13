@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectobases;
+package Vista;
 
 
+import ControladorPrincipal.ProyectoBases;
 import eu.schudt.javafx.controls.calendar.DatePicker;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -12,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Blend;
@@ -28,7 +28,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -100,7 +99,7 @@ public class PantallaPrincipal {
             @Override
             public void handle(ActionEvent event) {
                 Scene scene1 = new Scene(formulario.preparaFormulario());
-                scene1.getStylesheets().add(ProyectoBases.class.getResource("Principal.css").toExternalForm());
+                scene1.getStylesheets().add("File:src/Vista/Principal.css");
                 
                 primaryStage.setScene(scene1);
             }
