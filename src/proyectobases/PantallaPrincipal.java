@@ -13,6 +13,7 @@ import javafx.scene.effect.Blend;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Reflection;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -34,6 +35,7 @@ public class PantallaPrincipal {
     
     public PantallaPrincipal(){
         principal = new BorderPane();
+        principal.getStyleClass().add("principal");
         btn = new Button();
         capaTitulo = new TilePane();
         capaTitulo.setId("titulo");
@@ -82,7 +84,6 @@ public class PantallaPrincipal {
     
     private Text construyeTitulo(){
         Text titulo = new Text("Bienvenido a \"La Baguetera\"");
-        titulo.setId("titulo");
         titulo.setFont(Font.loadFont("file:Resources/fonts/Delicious-Heavy.otf", 100));
         titulo.setFill(Color.WHITE);
         
@@ -125,7 +126,12 @@ public class PantallaPrincipal {
 
         blend.setTopInput(blend1);
 
-        titulo.setEffect(blend);
+        Reflection r = new Reflection();
+        r.setInput(blend);
+        r.setFraction(0.9);
+        
+        titulo.setEffect(r);
+        
         return titulo;
     }
     

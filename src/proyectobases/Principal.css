@@ -64,11 +64,6 @@ root {
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
 
-.botonCompras text{
-    -fx-fill: white;
-    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
-}
-
-#titulo {
-    -fx-padding: 10%;
+.principal {
+    -fx-background-image: url("fondopared.jpg");
 }
