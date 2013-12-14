@@ -81,14 +81,18 @@ public class ConsultaClientes{
         return resultado.contains(nombreUsuario);
     }
     
-    public void agregaUsuario(String nombre, int telefono, String direccion){
-        String query = "INSERT INTO usuarios VALUES(" + nombre + ", "+
-                telefono + ", " + direccion + ")";
+    public boolean agregaUsuario(String nombre, int telefono, String direccion){
+        boolean ejecutada = false;
+        String query = "INSERT INTO Clientes VALUES(" + 
+                "\'"+ nombre + "\'" + ", " +
+                telefono + ", " + "\'" + direccion + "\'" + ")";
         try {
             stmt.executeUpdate(query);
+                ejecutada = true;
             stmt.execute("END");
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return ejecutada;
     }
 }

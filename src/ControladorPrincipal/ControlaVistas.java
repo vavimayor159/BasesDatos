@@ -6,6 +6,7 @@ package ControladorPrincipal;
 
 import Vista.IngresarUsuario;
 import Vista.PantallaPrincipal;
+import Vista.FormaRegistro;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -17,9 +18,12 @@ public class ControlaVistas {
     private static Stage primaryStage;
     private static PantallaPrincipal primera;
     private static IngresarUsuario formulario;
+    private static FormaRegistro registro;
     private static Scene index;
     private static Scene escenaFormulario;
     private static Scene escenaPrincipal;
+    private static Scene escenaRegistro;
+    private static Usuario usuario;
     
     public ControlaVistas(Stage primaryStage){
         ControlaVistas.primaryStage = primaryStage;
@@ -28,6 +32,7 @@ public class ControlaVistas {
     }
     
     public static void muestraVistaPrincipal(){
+        ControlaVistas.usuario = null;
         primera = new PantallaPrincipal(primaryStage);
         escenaPrincipal = new Scene(primera.getPrincipal());
         escenaPrincipal.getStylesheets().add("File:src/Vista/Principal.css");
@@ -35,10 +40,25 @@ public class ControlaVistas {
     }
     
     public static void muestraFormulario(){
+        ControlaVistas.usuario = null;
         formulario = new IngresarUsuario();
         escenaFormulario = new Scene(formulario.preparaFormulario());
         escenaFormulario.getStylesheets().add("File:src/Vista/Principal.css");
         primaryStage.setScene(escenaFormulario);
         primaryStage.show();
     }
+    
+    public static void muestraVistaRegistro(){
+        registro = new FormaRegistro();
+        escenaRegistro = new Scene(registro.muestraFormulario());
+        escenaRegistro.getStylesheets().add("File:src/Vista/Principal.css");
+        primaryStage.setScene(escenaRegistro);
+        primaryStage.show();
+    }
+
+    public static void setUsuarioActual(String nombre, int telefono, String direccion) {
+        ControlaVistas.usuario = new Usuario(nombre, telefono, direccion);
+    }
+    
+    
 }

@@ -14,15 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -32,11 +27,13 @@ import javafx.scene.text.Text;
 public class IngresarUsuario {
     private GridPane formulario;
     private BorderPane capaBase;
+    private TextoNeon textos;
     
     public IngresarUsuario(){
         formulario = new GridPane();
         capaBase = new BorderPane();
         capaBase.getStyleClass().add("principal");
+        textos = new TextoNeon();
     }
     
     public BorderPane preparaFormulario(){
@@ -45,7 +42,7 @@ public class IngresarUsuario {
         formulario.setVgap(12);
         formulario.setPadding(new Insets(25, 25, 25, 25));
         
-        formulario.add(creaTitulo(), 0, 0, 2, 1);
+        formulario.add(textos.neoniza("Ingresa"), 0, 0, 2, 1);
 
         Label userName = new Label("User Name:");
         formulario.add(userName, 0, 1);
@@ -70,8 +67,7 @@ public class IngresarUsuario {
                     actiontarget.setFill(Color.FIREBRICK);
                     actiontarget.setText("Esta en la base de datos");
                 } else {
-                    actiontarget.setFill(Color.FIREBRICK);
-                    actiontarget.setText("No esta en la base de datos");
+                    ControlaVistas.muestraVistaRegistro();
                 }
             }
         });
@@ -91,53 +87,4 @@ public class IngresarUsuario {
         return capaBase;
     }
     
-    private Text creaTitulo(){
-        Text datosUsuario = new Text("Ingresa");
-        
-        datosUsuario.setFont(Font.loadFont("file:Resources/fonts/Delicious-Heavy.otf", 100));
-        datosUsuario.setFill(Color.WHITE);
-        
-        Blend blend = new Blend();
-        blend.setMode(BlendMode.MULTIPLY);
-
-        DropShadow ds = new DropShadow();
-        ds.setColor(Color.rgb(254, 235, 66, 0.3));
-        ds.setOffsetX(5);
-        ds.setOffsetY(5);
-        ds.setRadius(5);
-        ds.setSpread(0.2);
-
-        blend.setBottomInput(ds);
-
-        DropShadow ds1 = new DropShadow();
-        ds1.setColor(Color.web("#f13a00"));
-        ds1.setRadius(20);
-        ds1.setSpread(0.2);
-
-        Blend blend2 = new Blend();
-        blend2.setMode(BlendMode.MULTIPLY);
-
-        InnerShadow is = new InnerShadow();
-        is.setColor(Color.web("#feeb42"));
-        is.setRadius(9);
-        is.setChoke(0.8);
-        blend2.setBottomInput(is);
-
-        InnerShadow is1 = new InnerShadow();
-        is1.setColor(Color.web("#f13a00"));
-        is1.setRadius(5);
-        is1.setChoke(0.4);
-        blend2.setTopInput(is1);
-
-        Blend blend1 = new Blend();
-        blend1.setMode(BlendMode.MULTIPLY);
-        blend1.setBottomInput(ds1);
-        blend1.setTopInput(blend2);
-
-        blend.setTopInput(blend1);
-        
-        datosUsuario.setEffect(blend);
-        
-        return datosUsuario;
-    }
 }

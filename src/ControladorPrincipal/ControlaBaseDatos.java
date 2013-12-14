@@ -28,4 +28,8 @@ public class ControlaBaseDatos {
     public static LinkedList<String> listaClientes(String condicion){
         return clientes.nombresClentes(condicion);
     }
+    
+    public static boolean agregaCliente(String nombre, int telefono, String direccion){
+        return clientes.agregaUsuario(nombre, telefono, direccion);
+    }
 }
