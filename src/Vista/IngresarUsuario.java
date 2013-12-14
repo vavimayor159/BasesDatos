@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -41,8 +40,6 @@ public class IngresarUsuario {
         formulario.setHgap(10);
         formulario.setVgap(12);
         formulario.setPadding(new Insets(25, 25, 25, 25));
-        
-        formulario.add(textos.neoniza("Ingresa"), 0, 0, 2, 1);
 
         Label userName = new Label("User Name:");
         formulario.add(userName, 0, 1);
@@ -64,8 +61,9 @@ public class IngresarUsuario {
             @Override
             public void handle(ActionEvent event) {
                 if(ControlaBaseDatos.buscaCliente(userTextField.getText())){
-                    actiontarget.setFill(Color.FIREBRICK);
-                    actiontarget.setText("Esta en la base de datos");
+                    ControlaVistas.muestraFormaPedido(
+                            ControlaBaseDatos.obtenCliente(
+                            userTextField.getText()));
                 } else {
                     ControlaVistas.muestraVistaRegistro();
                 }
@@ -84,6 +82,7 @@ public class IngresarUsuario {
         formulario.add(hbBtn, 1, 4);
         
         capaBase.setCenter(formulario);
+        capaBase.setTop(textos.neoniza("Ingresa"));
         return capaBase;
     }
     

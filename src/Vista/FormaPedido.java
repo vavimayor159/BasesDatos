@@ -4,17 +4,21 @@
  */
 package Vista;
 
-import ControladorPrincipal.ControlaBaseDatos;
 import ControladorPrincipal.ControlaVistas;
 import ControladorPrincipal.Pedido;
+import ControladorPrincipal.Usuario;
+import java.util.Calendar;
 import java.util.Date;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -32,13 +36,16 @@ public class FormaPedido {
     private TextoNeon textos;
     private Date fecha;
     private Pedido pedido;
+    private Usuario usuario;
+    private String cadenaPago;
     
-    public FormaPedido(){
+    public FormaPedido(Usuario usuario){
         formulario = new GridPane();
         capaBase = new BorderPane();
         capaBase.getStyleClass().add("principal");
         textos = new TextoNeon();
         fecha = new Date();
+        this.usuario = usuario;
     }
     
     public BorderPane muestraFormulario(){
@@ -55,7 +62,7 @@ public class FormaPedido {
         Label nom = new Label("Nombre:");
         formulario.add(nom, 0, 1);
 
-        Label campoNombre = new Label();
+        Label campoNombre = new Label(usuario.getNombre());
         formulario.add(campoNombre, 1, 1);
 
         Label fec = new Label("Fecha:");
@@ -67,8 +74,13 @@ public class FormaPedido {
         Label dir = new Label("Direccion:");
         formulario.add(dir, 0, 3);
         
-        Label direccion = new Label();
+        Label direccion = new Label(usuario.getDireccion());
         formulario.add(direccion, 1, 3);
+        
+        final TextField nuevaDireccion = new TextField();
+        nuevaDireccion.setPromptText("Solo si la direccion de entrega es distinta"
+                + "a la del usuario");
+        formulario.add(nuevaDireccion, 2, 3);
         
         Label noBaguettes = new Label("Cantidad de baguettes:");
         formulario.add(noBaguettes, 0, 4);
@@ -79,22 +91,33 @@ public class FormaPedido {
         Label formaPago = new Label("Forma de Pago:");
         formulario.add(formaPago, 0, 5);
         
-        final ChoiceBox pago = new ChoiceBox(FXCollections.observableArrayList(
-    "Efectivo", "Tarjeta"));
+        ObservableList<String> opciones = FXCollections.observableArrayList(
+        "Efectivo", "Tarjeta");
         
+        final ComboBox pago = new ComboBox(opciones);
         formulario.add(pago, 1, 5);
+        
+        pago.setPromptText("Forma de Pago");
+        pago.valueProperty().addListener(new ChangeListener<String>() {
+            @Override 
+            public void changed(ObservableValue ov, String t, String t1) {                
+                cadenaPago = t1;                
+            }    
+        });
         
         Button agregarPedido = new Button("Realizar Pedido");
         
         agregarPedido.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String nombre = campoNombre.getText();
-                int telefonoObtenido;
-                telefonoObtenido = Integer.parseInt(telefono.getText());
-                String direccionObtenida = direccion.getText();
-                ControlaBaseDatos.agregaCliente(nombre, telefonoObtenido, direccionObtenida);
-                ControlaVistas.muestraFormaPedido();
+                String direccionEntrega;
+                if(nuevaDireccion.getText() != null){
+                    direccionEntrega = nuevaDireccion.getText();
+                } else {
+                    direccionEntrega = usuario.getDireccion();
+                }
+                pedido = new Pedido(usuario.getNombre(), Calendar.getInstance(),
+                        direccionEntrega, cadenaPago);
             }
         });
         Button regresar = new Button("Regresar");
@@ -107,7 +130,7 @@ public class FormaPedido {
         
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().addAll(regresar, registrar);
+        hbBtn.getChildren().addAll(regresar, agregarPedido);
         formulario.add(hbBtn, 1, 6);
         
         formulario.setGridLinesVisible(true);

@@ -6,6 +6,7 @@ package Vista;
 
 import ControladorPrincipal.ControlaBaseDatos;
 import ControladorPrincipal.ControlaVistas;
+import ControladorPrincipal.Usuario;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -72,9 +73,8 @@ public class FormaRegistro {
                 int telefonoObtenido;
                 telefonoObtenido = Integer.parseInt(telefono.getText());
                 String direccionObtenida = direccion.getText();
-                ControlaVistas.setUsuarioActual(nombre, telefonoObtenido, direccionObtenida);
                 ControlaBaseDatos.agregaCliente(nombre, telefonoObtenido, direccionObtenida);
-                ControlaVistas.muestraFormaPedido();
+                ControlaVistas.muestraFormaPedido(new Usuario(nombre, telefonoObtenido, direccionObtenida));
             }
         });
         Button regresar = new Button("Regresar");

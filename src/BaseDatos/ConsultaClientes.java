@@ -4,6 +4,7 @@
  */
 package BaseDatos;
 
+import ControladorPrincipal.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,6 +54,28 @@ public class ConsultaClientes{
             while(rs.next()){
                 resultado.add(rs.getString("nombre"));
             }
+            stmt.execute("END");
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultado;
+    }
+    
+    public Usuario obtenerUsuario(String nombre){
+        Usuario resultado = null;
+        int telefono = 0;
+        String nombreResultado = "", direccion = "";
+        String query = "SELECT * FROM Clientes WHERE nombre = " +
+                "\'"+ nombre + "\'";
+        try {
+            rs = stmt.executeQuery(query);
+            while(rs.next()){
+                nombreResultado = rs.getString("nombre");
+                telefono = rs.getInt("telefono");
+                direccion = rs.getString("direccion");
+                
+            }
+            resultado = new Usuario(nombreResultado, telefono, direccion);
             stmt.execute("END");
         } catch (SQLException ex) {
             Logger.getLogger(ConsultaClientes.class.getName()).log(Level.SEVERE, null, ex);

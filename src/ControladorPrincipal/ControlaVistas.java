@@ -4,6 +4,7 @@
  */
 package ControladorPrincipal;
 
+import Vista.FormaPedido;
 import Vista.IngresarUsuario;
 import Vista.PantallaPrincipal;
 import Vista.FormaRegistro;
@@ -19,10 +20,12 @@ public class ControlaVistas {
     private static PantallaPrincipal primera;
     private static IngresarUsuario formulario;
     private static FormaRegistro registro;
+    private static FormaPedido pedido;
     private static Scene index;
     private static Scene escenaFormulario;
     private static Scene escenaPrincipal;
     private static Scene escenaRegistro;
+    private static Scene escenaPedido;
     private static Usuario usuario;
     
     public ControlaVistas(Stage primaryStage){
@@ -58,6 +61,16 @@ public class ControlaVistas {
 
     public static void setUsuarioActual(String nombre, int telefono, String direccion) {
         ControlaVistas.usuario = new Usuario(nombre, telefono, direccion);
+    }
+    
+    public static void muestraFormaPedido(Usuario usuario){
+        ControlaVistas.setUsuarioActual(usuario.getNombre(), usuario.getTelefono(),
+                usuario.getDireccion());
+        pedido = new FormaPedido(usuario);
+        escenaPedido = new Scene(pedido.muestraFormulario());
+        escenaPedido.getStylesheets().add("File:src/Vista/Principal.css");
+        primaryStage.setScene(escenaPedido);
+        primaryStage.show();
     }
     
     
