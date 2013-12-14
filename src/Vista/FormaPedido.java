@@ -38,6 +38,7 @@ public class FormaPedido {
     private Pedido pedido;
     private Usuario usuario;
     private String cadenaPago;
+    private String entrega;
     
     public FormaPedido(Usuario usuario){
         formulario = new GridPane();
@@ -95,9 +96,7 @@ public class FormaPedido {
         "Efectivo", "Tarjeta");
         
         final ComboBox pago = new ComboBox(opciones);
-        formulario.add(pago, 1, 5);
-        
-        pago.setPromptText("Forma de Pago");
+        pago.setPromptText("Pago");
         pago.valueProperty().addListener(new ChangeListener<String>() {
             @Override 
             public void changed(ObservableValue ov, String t, String t1) {                
@@ -105,21 +104,27 @@ public class FormaPedido {
             }    
         });
         
+        formulario.add(pago, 1, 5);
+        
+        final String nombre = usuario.getNombre();
+        final Calendar hoy = Calendar.getInstance();
         Button agregarPedido = new Button("Realizar Pedido");
         
         agregarPedido.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                String direccionEntrega;
-                if(nuevaDireccion.getText() != null){
-                    direccionEntrega = nuevaDireccion.getText();
+                int cantidadBaguettes = Integer.parseInt(cantidad.getText());
+                if(nuevaDireccion.getText() != null && !"".equals(nuevaDireccion.getText())){
+                    entrega = nuevaDireccion.getText();
                 } else {
-                    direccionEntrega = usuario.getDireccion();
+                    entrega = usuario.getDireccion();
                 }
-                pedido = new Pedido(usuario.getNombre(), Calendar.getInstance(),
-                        direccionEntrega, cadenaPago);
+                pedido = new Pedido(nombre, hoy,
+                        entrega, cadenaPago);
+                ControlaVistas.muestraFormaAlimentos(pedido, cantidadBaguettes);
             }
         });
+        
         Button regresar = new Button("Regresar");
         regresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -134,7 +139,7 @@ public class FormaPedido {
         formulario.add(hbBtn, 1, 6);
         
         formulario.setGridLinesVisible(true);
-        capaBase.setTop(textos.neoniza("Registrate"));
+        capaBase.setTop(textos.neoniza("Detalles de pedido"));
         capaBase.setCenter(formulario);
         return capaBase;
     }

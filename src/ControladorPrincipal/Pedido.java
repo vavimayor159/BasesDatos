@@ -5,6 +5,7 @@
 package ControladorPrincipal;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 
 /**
  *
@@ -17,6 +18,11 @@ public class Pedido {
     private String direccionEntrega;
     private String tipoPago;
     private String nombreRepartidor;
+    private LinkedList<Baguette> baguettes;
+
+    public LinkedList<Baguette> getBaguettes() {
+        return baguettes;
+    }
 
     public Pedido(String nombreCliente, Calendar fecha, String direccionEntrega, String tipoPago) {
         this.nombreCliente = nombreCliente;
@@ -45,6 +51,9 @@ public class Pedido {
         return nombreRepartidor;
     }
     
-    
+    public boolean agregaBaguette(Baguette baguette){
+        this.baguettes.add(baguette);
+        return true;
+    }
     
 }

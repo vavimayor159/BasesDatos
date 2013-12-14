@@ -4,6 +4,7 @@
  */
 package ControladorPrincipal;
 
+import Vista.FormaAlimentos;
 import Vista.FormaPedido;
 import Vista.IngresarUsuario;
 import Vista.PantallaPrincipal;
@@ -21,11 +22,13 @@ public class ControlaVistas {
     private static IngresarUsuario formulario;
     private static FormaRegistro registro;
     private static FormaPedido pedido;
+    private static FormaAlimentos alimentos;
     private static Scene index;
     private static Scene escenaFormulario;
     private static Scene escenaPrincipal;
     private static Scene escenaRegistro;
     private static Scene escenaPedido;
+    private static Scene escenaAlimentos;
     private static Usuario usuario;
     
     public ControlaVistas(Stage primaryStage){
@@ -73,5 +76,12 @@ public class ControlaVistas {
         primaryStage.show();
     }
     
+    public static void muestraFormaAlimentos(Pedido pedido, int cantidad){
+        alimentos = new FormaAlimentos(pedido, cantidad); 
+        escenaAlimentos = new Scene(alimentos.muestraFormulario());
+        escenaAlimentos.getStylesheets().add("File:src/Vista/Principal.css");
+        primaryStage.setScene(escenaAlimentos);
+        primaryStage.show();
+    }
     
 }
