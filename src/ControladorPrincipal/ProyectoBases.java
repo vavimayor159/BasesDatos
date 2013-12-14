@@ -16,6 +16,7 @@ public class ProyectoBases extends Application {
     @Override
     public void start(Stage primaryStage) {
         ControlaVistas principal = new ControlaVistas(primaryStage);
+        ControlaBaseDatos baseDatos = new ControlaBaseDatos();
         ControlaVistas.muestraVistaPrincipal();
         primaryStage.show();
     }
