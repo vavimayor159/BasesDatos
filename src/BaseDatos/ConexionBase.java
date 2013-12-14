@@ -22,15 +22,16 @@ public class ConexionBase {
      * si esta estuviera en otra máquina, necesitariamos estar registrados en ella 
      * y contar con su IP*/
     private final String url = "jdbc:postgresql://localhost:5432/TiendaBagguetes";
+    private final String pass = "megayo";
     private Connection conexion;
     private Statement stmt;
 
     public ConexionBase(){
         try{
-
+            System.out.println("Se va a conectar con la base de datos");
             //Acceso al Driver
             Class.forName("org.postgresql.Driver");
-            conexion = DriverManager.getConnection( url,"postgres","postgres");
+            conexion = DriverManager.getConnection( url,"postgres", pass);
             stmt = conexion.createStatement();
             
         }

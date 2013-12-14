@@ -63,7 +63,8 @@ public class ConsultaClientes{
     
     // Por seguridad se ejecuta la consulta cada vez en lugar de tener
     // almacenados los datos
-    public Boolean estaRegistrado(String nombreUsuario){
+    public boolean estaRegistrado(String nombreUsuario){
+        
         String query = "SELECT nombre FROM Clientes";
         LinkedList<String> resultado;
         resultado = new LinkedList<>();

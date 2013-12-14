@@ -66,8 +66,7 @@ public class IngresarUsuario {
         ingresar.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(userTextField.getPromptText());
-                if(ControlaBaseDatos.buscaCliente(userTextField.getPromptText())){
+                if(ControlaBaseDatos.buscaCliente(userTextField.getText())){
                     actiontarget.setFill(Color.FIREBRICK);
                     actiontarget.setText("Esta en la base de datos");
                 } else {
